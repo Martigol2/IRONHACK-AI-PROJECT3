@@ -1,0 +1,128 @@
+Amazon Customer Reviews Intelligence Platform
+
+Final Project Report
+
+1. Project Objective
+
+Develop an end-to-end Natural Language Processing (NLP) pipeline capable
+of automatically classifying customer sentiment, grouping Amazon
+products into meaningful categories, and generating AI-assisted buying
+guides from customer reviews. The resulting models were later integrated
+into a separate Streamlit deployment.
+
+2. Introduction
+
+Customer reviews provide valuable insights into product quality and
+customer satisfaction. This project develops an end-to-end NLP pipeline
+to automatically analyze Amazon reviews using sentiment classification,
+product clustering, and generative AI.
+
+3. Business Problem
+
+The objective is to transform thousands of customer reviews into
+actionable insights by automatically identifying customer sentiment,
+organizing products into meaningful categories, and generating buying
+recommendations.
+
+4. Dataset
+
+Source: Amazon Product Reviews (Kaggle)
+
+-   Original dataset: 34,660 reviews
+-   Final cleaned dataset: 34,626 reviews
+-   21 original variables
+-   Reviews from Amazon devices including Fire Tablets, Kindle, Echo,
+    Fire TV, and Accessories
+
+Sentiment labels: - Ratings 1–2 → Negative - Rating 3 → Neutral -
+Ratings 4–5 → Positive
+
+5. Exploratory Data Analysis
+
+The dataset was explored through missing-value analysis, duplicate
+detection, rating distributions, sentiment distributions, review length
+analysis, product and brand statistics, and text exploration.
+
+Key findings: - More than 93% of reviews were positive, producing a
+highly imbalanced dataset. - Missing values were concentrated in user
+metadata and removed during preprocessing. - Product ratings were
+strongly skewed toward 5-star reviews. - These observations motivated
+the use of balanced classifiers and Macro-F1 as the primary evaluation
+metric.
+
+6. Data Cleaning
+
+The preprocessing pipeline removed duplicates, handled missing values,
+selected relevant features, merged review titles with review text into a
+single input field, and created the final three-class sentiment target.
+
+7. Methodology
+
+Sentiment Classification: - Dummy Classifier - TF-IDF + Logistic
+Regression - TF-IDF + Tuned Linear SVM - DistilBERT
+
+DistilBERT achieved the best predictive performance. Linear SVM was
+selected for deployment because it provides fast inference, lower
+computational requirements, and explainable predictions.
+
+Product Clustering: - TF-IDF - Truncated SVD - K-Means
+
+Products were grouped into four interpretable categories that served as
+the foundation for the recommendation engine and generative AI.
+
+Generative AI: Google FLAN-T5 Small generated structured buying guides
+containing: - Overview - Top Recommendations - Common Complaints -
+Buying Recommendation
+
+8. Model Evaluation
+
+Dummy Classifier Accuracy: 93.3% Macro-F1: 0.322 TF-IDF + Logistic
+Regression Accuracy: 89.0% Macro-F1: 0.562 TF-IDF + Linear SVM Accuracy:
+93.2% Macro-F1: 0.577 DistilBERT Accuracy: 95.2% Macro-F1: 0.704
+
+Discussion: Logistic Regression established a strong baseline. Linear
+SVM improved Macro-F1 while remaining lightweight and interpretable.
+DistilBERT achieved the highest predictive performance, especially on
+minority classes, but its computational cost made Linear SVM the
+preferred model for deployment.
+
+9. Deployment
+
+The research repository was separated from the deployment repository. A
+dedicated Streamlit application integrates the trained models into three
+modules: - Category Summaries - Sentiment Explorer - Customer Personas
+
+10. Results
+
+-   34,626 cleaned customer reviews
+-   Four evaluated sentiment classification models
+-   Best-performing model: DistilBERT (95.2% Accuracy, Macro-F1 0.704)
+-   Four interpretable product clusters
+-   AI-generated buying guides
+-   Interactive Streamlit deployment
+
+11. Limitations
+
+The main limitation is the severe class imbalance, particularly for
+Neutral and Negative reviews, which affected minority-class performance.
+
+12. Future Work
+
+Potential improvements include: - Class balancing techniques - Larger
+transformer models - Multilingual support - Retrieval-Augmented
+Generation (RAG) - Live review ingestion through APIs
+
+13. Conclusion
+
+This project demonstrates a complete NLP workflow from raw customer
+reviews to actionable business insights by combining supervised
+learning, unsupervised learning, generative AI, and interactive
+deployment.
+
+14. References
+
+-   Amazon Product Reviews Dataset (Kaggle)
+-   Scikit-learn Documentation
+-   Hugging Face Transformers
+-   Google FLAN-T5
+-   Streamlit Documentation
